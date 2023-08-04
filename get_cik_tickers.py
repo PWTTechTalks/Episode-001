@@ -5,6 +5,7 @@ import os
 import json as js
 
 dotenv.load_dotenv('.env_techtalk_SEC')
+dotenv.load_dotenv('techtalk_SEC.secrets')
 SEC_headers= {
     "User-Agent":"PWTTechTalkBot/1.0 Port Wallis Technologies contact - rwolfe@portwallistechnologies.com",
     "Accept":"application/json"
@@ -43,9 +44,10 @@ req = requests.get(url=f"""{os.getenv("DATA_URL")}/submissions/CIK{company_cik.r
 
 print (req.url)
 print (req.content)
-exit()
 with open(file='thedump.json',mode='w') as file:
     js.dump(req.json,file)
+
+
 
 
 
