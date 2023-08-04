@@ -28,11 +28,16 @@ db.run(f'truncate table "{os.getenv("PG_SCHEMA")}".company_ticker')
                    '{the_json[a]["title"].replace("'","''")}') """ ) 
        for a in the_json]
 
-company_cik :str = db.one(f"""select cik_str from "{os.getenv("PG_SCHEMA")}".company_ticker where ticker = 'AAPL'
-                          """)
+company_cik :str = db.one(f"""select cik_str from "{os.getenv("PG_SCHEMA")}".company_ticker where ticker = 'AES' """)
+
 print (company_cik.rjust(10,'0'))
 
-req = requests.get(url=f'{os.getenv("DATA_URL")}/submissions/CIK{company_cik.rjust(10,'0')}.json')
+req = requests.get(url=f"""{os.getenv("DATA_URL")}/submissions/CIK{company_cik.rjust(10,'0')}.json""")
+
+print (f"""{os.getenv("DATA_URL")}/submissions/CIK{company_cik.rjust(10,'0')}.json""")
+
+with open(file='thedump.json',mode='w') as file:
+    json.dump(req.json(),file)
 
 
 
