@@ -2,10 +2,20 @@ import requests
 from postgres import Postgres
 import dotenv
 import os
+import json as js
 
 dotenv.load_dotenv('.env_techtalk_SEC')
+SEC_headers= {
+    "User-Agent":"PWTTechTalkBot/1.0 Port Wallis Technologies contact - rwolfe@portwallistechnologies.com",
+    "Accept":"application/json"
+} 
+r= requests.Request(method='GET',url=f'{os.getenv("WEB_URL")}/files/company_tickers.json',headers=SEC_headers)
+print (r.headers)
+exit()
+req = requests.get(url=f'{os.getenv("WEB_URL")}/files/company_tickers.json',headers=SEC_headers)
 
-req = requests.get(url=f'{os.getenv("WEB_URL")}/files/company_tickers.json')
+exit()
+print (req.headers)
 
 with open(file='cik_tickers.json',mode='w') as file:
     the_json = req.json()
@@ -34,10 +44,11 @@ print (company_cik.rjust(10,'0'))
 
 req = requests.get(url=f"""{os.getenv("DATA_URL")}/submissions/CIK{company_cik.rjust(10,'0')}.json""")
 
-print (f"""{os.getenv("DATA_URL")}/submissions/CIK{company_cik.rjust(10,'0')}.json""")
-
+print (req.url)
+print (req.content)
+exit()
 with open(file='thedump.json',mode='w') as file:
-    json.dump(req.json(),file)
+    js.dump(req.json,file)
 
 
 
