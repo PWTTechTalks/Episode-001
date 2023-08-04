@@ -16,8 +16,7 @@ s = requests.Session()
 
 req= s.send( r.prepare())
 
-with open(file='cik_tickers.json',mode='w') as file:
-    the_json = req.json()
+the_json = req.json()
 
 db = Postgres()
     
