@@ -10,11 +10,8 @@ SEC_headers= {
     "Accept":"application/json"
 } 
 r= requests.Request(method='GET',url=f'{os.getenv("WEB_URL")}/files/company_tickers.json',headers=SEC_headers)
-print (r.headers)
-exit()
-req = requests.get(url=f'{os.getenv("WEB_URL")}/files/company_tickers.json',headers=SEC_headers)
-
-exit()
+s = requests.Session()
+req= s.send( r.prepare())
 print (req.headers)
 
 with open(file='cik_tickers.json',mode='w') as file:
