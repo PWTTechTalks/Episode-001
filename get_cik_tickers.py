@@ -4,8 +4,9 @@ import dotenv
 import os
 import json as js
 
-dotenv.load_dotenv('.env_techtalk_SEC')
 dotenv.load_dotenv('techtalk_SEC.secrets')
+dotenv.load_dotenv('techtalk_SEC.env')
+
 SEC_headers= {
     "User-Agent":"PWTTechTalkBot/1.0 Port Wallis Technologies contact - rwolfe@portwallistechnologies.com",
     "Accept":"application/json"
@@ -17,7 +18,7 @@ print (req.headers)
 
 with open(file='cik_tickers.json',mode='w') as file:
     the_json = req.json()
-
+exit()
 db = Postgres()
     
 # always clear out the table first
@@ -46,15 +47,3 @@ print (req.url)
 print (req.content)
 with open(file='thedump.json',mode='w') as file:
     js.dump(req.json,file)
-
-
-
-
-
-
-
-
-
-
-
-
