@@ -2,7 +2,7 @@ import requests
 from postgres import Postgres
 import dotenv
 import os
-
+import json
 dotenv.load_dotenv('.env_techtalk_SEC')
 
 req = requests.get(url=f'{os.getenv("WEB_URL")}/files/company_tickers.json')
@@ -28,18 +28,9 @@ db.run(f'truncate table "{os.getenv("PG_SCHEMA")}".company_ticker')
                    '{the_json[a]["title"].replace("'","''")}') """ ) 
        for a in the_json]
 
-company_cik :str = db.one(f"""select cik_str from "{os.getenv("PG_SCHEMA")}".company_ticker where ticker = 'AAPL'
-                          """)
-print (company_cik.rjust(10,'0'))
+company_cik :str = db.one(f"""select cik_str from "{os.getenv("PG_SCHEMA")}".company_ticker where ticker = 'AAPL' """)
 
-req = requests.get(url=f'{os.getenv("DATA_URL")}/submissions/CIK{company_cik.rjust(10,'0')}.json')
+req = requests.get(url=f'{os.getenv("DATA_URL")}/submissions/CIK{company_cik.rjust(10,"0")}.json')
 
-
-
-
-
-
-
-
-
-
+with open(file='thedump.json',mode='w') as file:
+    json.dump(req.json(),file)
